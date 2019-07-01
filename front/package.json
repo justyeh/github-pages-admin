@@ -1,0 +1,47 @@
+{
+  "name": "front",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "start": "set PORT=3001 && react-app-rewired start",
+    "build": "react-app-rewired build",
+    "test": "react-app-rewired test",
+    "eject": "react-scripts eject"
+  },
+  "eslintConfig": {
+    "extends": "react-app"
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  },
+  "dependencies": {
+    "antd": "^3.19.8",
+    "axios": "^0.19.0",
+    "codemirror": "^5.48.0",
+    "highlight.js": "^9.15.8",
+    "less": "^3.9.0",
+    "less-loader": "^5.0.0",
+    "marked": "^0.6.2",
+    "react": "^16.8.6",
+    "react-dom": "^16.8.6",
+    "react-router-dom": "^5.0.1",
+    "react-scripts": "3.0.1"
+  },
+  "devDependencies": {
+    "babel-plugin-import": "^1.11.0",
+    "customize-cra": "^0.2.12",
+    "http-proxy-middleware": "^0.19.1",
+    "node-sass": "^4.11.0",
+    "react-app-rewired": "^2.1.1",
+    "sass-loader": "^7.1.0"
+  }
+}

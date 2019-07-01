@@ -1,0 +1,17 @@
+<div class="post-detail-page">
+  <div class="poster" v-if="poster" :style="'background-image:url(./image'+poster+')'"></div>
+  <div class="title">{{title}}</div>
+  <div class="info">
+    <i class="fa fa-clock-o"></i>
+    <p>{{updated_at}}</p>
+    <template v-if="tagList.length > 0">
+      <i class="fa fa-tag"></i>
+      <div>
+        <a v-for="tag in tagList" :key="tag.id" :href="'/tag/'+tag.id">{{tag.name}}</a>
+      </div>
+    </template>
+  </div>
+  <div class="content">
+    <div class="md" v-html="content"></div>
+  </div>
+</div>

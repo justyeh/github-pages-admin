@@ -1,0 +1,21 @@
+<div class="post-list-page">
+    <div class="post-list">
+        <div class="post-item" v-for="post in postList">
+            <div class="poster" v-if="post.poster" :style="'background-image: url(/post/'+post.id+'/image'+post.poster+')'"></div>
+            <div class="content">
+                <a :href="'/post/'+post.id" class="title">{{post.title}}</a>
+                <div class="desc">{{post.summary}}</div>
+                <div class="info">
+                    <i class="fa fa-clock-o"></i>
+                    <p>{{post.updated_at}}</p>
+                    <i class="fa fa-tag" v-if="post.tagList>0"></i>
+                    <div>
+                        <a v-for="postTag in post.tagList" :key="postTag.id" :href="'/tag/'+postTag.id">{{postTag.name}}</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="pager" v-if="pager" v-html="pager">
+    </div>
+</div>

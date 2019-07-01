@@ -1,0 +1,42 @@
+.post-list {
+    .poster {
+        display: block;
+        width: 45px;
+        height: 45px;
+        background: #eee;
+        object-fit: contain;
+        margin: 0 auto;
+    }
+}
+
+
+
+.tag-search {
+    position: relative;
+
+    ul {
+        position: absolute;
+        left: 0;
+        right: 0;
+        top: 38px;
+        background: #fff;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+        z-index: 100;
+        border-radius: 4px;
+        padding: 5px 0;
+        max-height: 200px;
+        overflow: auto;
+    }
+
+    li {
+        padding: 0 12px;
+        height: 32px;
+        line-height: 32px;
+        cursor: pointer;
+
+        &:hover,
+        &.active {
+            background-color: #e6f7ff;
+        }
+    }
+}

@@ -1,0 +1,25 @@
+<div class="post-list-page filter-page">
+    <div class="filter-tip">关于<span>{{name}}</span>的相关文章</div>
+    <div v-if="postList.length == 0" class="error">
+        <div class="empty-tip">'(*&gt;﹏&lt;*)'没有数据!</div>
+    </div>
+    <template v-else>
+        <div class="post-list">
+            <div class="post-item" v-for="post in postList">
+                <div class="poster" v-if="post.poster" :style="'background-image: url(/post/'+post.id+'/image'+post.poster+')'"></div>
+                <div class="content">
+                    <a :href="'/post/'+post.id" class="title">{{post.title}}</a>
+                    <div class="desc">{{post.summary}}</div>
+                    <div class="info">
+                        <i class="fa fa-clock-o"></i>
+                        <p>{{post.updated_at}}</p>
+                        <i class="fa fa-tag" v-if="post.tagList>0"></i>
+                        <div>
+                            <a v-for="postTag in post.tagList" :key="postTag.id" :href="'/tag/'+postTag.id">{{postTag.name}}</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </template>
+</div>
