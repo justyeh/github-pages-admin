@@ -15,7 +15,8 @@ select {
     outline: none;
 }
 
-a {
+a,
+.link {
     color: @c-main;
     text-decoration: none;
     cursor: pointer;
@@ -49,6 +50,7 @@ img {
     border: 0;
 }
 
+.link,
 button,
 a {
     cursor: pointer;
@@ -146,7 +148,15 @@ input[type=search]::-webkit-search-decoration {
         margin-left: 20px;
     }
 
-    .user {
+    span {
+        margin-right: 10px;
+    }
+
+    span:hover {
+        color: #40a9ff
+    }
+
+    /* .user {
         color: #222;
         font-size: 16px;
 
@@ -171,7 +181,7 @@ input[type=search]::-webkit-search-decoration {
                 text-decoration: underline;
             }
         }
-    }
+    } */
 }
 
 .sidebar {
@@ -243,6 +253,7 @@ input[type=search]::-webkit-search-decoration {
 
 .container {
     padding: 20px;
+
     &.filter {
         display: flex;
         align-items: center;

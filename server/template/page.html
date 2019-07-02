@@ -1,7 +1,7 @@
 <div class="post-list-page">
     <div class="post-list">
         <div class="post-item" v-for="post in postList">
-            <div class="poster" v-if="post.poster" :style="'background-image: url(/post/'+post.id+'/image'+post.poster+')'"></div>
+            <div class="poster" v-if="post.poster" :style="'background-image: url(https://justyeh.github.io/static/blog/'+post.id+'/'+post.poster+')'"></div>
             <div class="content">
                 <a :href="'/post/'+post.id" class="title">{{post.title}}</a>
                 <div class="desc">{{post.summary}}</div>

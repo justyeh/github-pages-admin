@@ -118,4 +118,13 @@ function handleRouter(req, res) {
     router.request("/api/tag/delete", (req, res) => {
         res.json(deleteTag(Number(req.body.id)));
     });
+
+    router.request("/api/generate", async (req, res) => {
+        try {
+            await generate();
+            res.json({ code: 200, data: "", message: "ok" });
+        } catch (error) {
+            res.json({ code: 201, data: "", message: error });
+        }
+    });
 }

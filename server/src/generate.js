@@ -4,12 +4,34 @@ const marked = require("marked");
 const Vue = require("vue");
 const VueServerRenderer = require("vue-server-renderer");
 const helper = require("./helper");
+const BLOG_URL = "https://justyeh.github.io";
 
 marked.setOptions({
     renderer: new marked.Renderer(),
     gfm: true,
     tables: true
 });
+
+function getMarkedRender(postId) {
+    let renderer = new marked.Renderer();
+    renderer.image = function(href, title, text) {
+        if (href.startsWith("http")) {
+            return `<img src="href" alt="${text || ""}" />`;
+        } else {
+            return `<img src="${BLOG_URL}/static/blog/${postId}/${href}" alt="${text ||
+                ""}" />`;
+        }
+    };
+    renderer.link = function(href, title, text) {
+        if (href.startsWith("http")) {
+            return `<a href="${href}" title="${title || ""}">${text}</a>`;
+        } else {
+            return `<a href="${BLOG_URL}/static/blog/${postId}/${href}" title="${title ||
+                ""}">${text}</a>`;
+        }
+    };
+    return renderer;
+}
 
 let STORE = {};
 
@@ -58,8 +80,6 @@ const App_Tag = new Vue({
     }
 });
 
-const BLOG_URL = "https://justyeh.github.io";
-
 function getPostDetail(postId) {
     let tagIds = STORE.post_tag
         .filter(item => item.post_id === postId)
@@ -68,7 +88,8 @@ function getPostDetail(postId) {
         return tagIds.indexOf(item.id) > -1;
     });
     let content = marked(
-        fse.readFileSync(`./database/markdown/${postId}.md`, "utf-8")
+        fse.readFileSync(`./database/markdown/${postId}.md`, "utf-8"),
+        { renderer: getMarkedRender(postId) }
     );
 
     let post = STORE.post.find(item => item.id === postId);
@@ -194,7 +215,6 @@ async function generate() {
     await generateHtml();
     await generateSitemap();
     copy2GithubPages();
-    console.log(123);
 }
 
 exports.generate = generate;
