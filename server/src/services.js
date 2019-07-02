@@ -177,6 +177,18 @@ function deletePost(postId) {
         fse.outputJSONSync(PostPath, postList);
         fse.outputJSONSync(PostTagPath, postTagList);
 
+        try {
+            let targetPath = path.resolve(
+                __dirname,
+                "../../../justyeh.github.io/static/blog/"
+            );
+            let oldName = path.resolve(targetPath, `./${postId}`);
+            let newName = path.resolve(targetPath, `./${postId}-remove`);
+            fse.renameSync(oldName, newName);
+        } catch (error) {
+            console.error(error);
+        }
+
         return { code: 200, data: "", message: "ok" };
     } catch (error) {
         console.log(error);
@@ -258,4 +270,3 @@ function deleteTag(tagId) {
 }
 
 exports.deleteTag = deleteTag;
-

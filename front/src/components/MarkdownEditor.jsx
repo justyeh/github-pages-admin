@@ -8,6 +8,8 @@ import "@/assets/less/MarkdownEditor.less";
 import CodeMirror from "codemirror";
 import "codemirror/mode/markdown/markdown";
 
+const BLOG_URL = "https://justyeh.github.io";
+
 export default class MarkdownEditor extends Component {
     constructor(props) {
         super(props);
@@ -24,7 +26,21 @@ export default class MarkdownEditor extends Component {
         let { postId } = this.props.data;
         this.rendererMD = new marked.Renderer();
         this.rendererMD.image = function(href, title, text) {
-            return `<img src="https://justyeh.github.io/post/${postId}/${href}" alt="${text}" />`;
+            if (href.startsWith("http")) {
+                return `<img src="href" alt="${text || ""}" />`;
+            } else {
+                return `<img src="${BLOG_URL}/static/blog/${postId}/${href}" alt="${text ||
+                    ""}" />`;
+            }
+        };
+        this.rendererMD.link = function(href, title, text) {
+            if (href.startsWith("http")) {
+                return `<a href="${href}" title="${title ||
+                    ""}" target="_blank">${text}</a>`;
+            } else {
+                return `<a href="${BLOG_URL}/static/blog/${postId}/${href}" title="${title ||
+                    ""}" target="_blank">${text}</a>`;
+            }
         };
 
         marked.setOptions({

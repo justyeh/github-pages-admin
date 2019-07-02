@@ -36,7 +36,7 @@ export default class Post extends Component {
                 render: (poster, record) =>
                     poster ? (
                         <img
-                            src={`https://justyeh.github.io/post/${record.id}/image/${poster}`}
+                            src={`https://justyeh.github.io/static/blog/${record.id}/${poster}`}
                             className="poster"
                             alt="poster"
                         />

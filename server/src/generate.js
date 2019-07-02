@@ -24,10 +24,10 @@ function getMarkedRender(postId) {
     };
     renderer.link = function(href, title, text) {
         if (href.startsWith("http")) {
-            return `<a href="${href}" title="${title || ""}">${text}</a>`;
+            return `<a href="${href}" title="${title || ""}" target="_blank">${text}</a>`;
         } else {
             return `<a href="${BLOG_URL}/static/blog/${postId}/${href}" title="${title ||
-                ""}">${text}</a>`;
+                ""}" target="_blank">${text}</a>`;
         }
     };
     return renderer;
