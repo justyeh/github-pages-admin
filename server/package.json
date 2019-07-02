@@ -3,6 +3,9 @@
     "server": "nodemon app.js"
   },
   "dependencies": {
-    "fs-extra": "^8.1.0"
+    "fs-extra": "^8.1.0",
+    "marked": "^0.6.3",
+    "vue": "^2.6.10",
+    "vue-server-renderer": "^2.6.10"
   }
 }

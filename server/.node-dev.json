@@ -1,6 +1,7 @@
 {
     "ignore": [
-        "front",
-        "node_modules"
+        "node_modules",
+        "dist",
+        "database"
     ]
 }

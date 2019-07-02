@@ -8,9 +8,9 @@ const {
     deletePost,
     getTagList,
     updateTag,
-    deleteTag,
-    publishBlog
+    deleteTag
 } = require("./src/services.js");
+const { generate } = require("./src/generate");
 
 function Router(req, res) {
     this.request = function(url, fn) {
@@ -48,15 +48,19 @@ function Router(req, res) {
             });
 
             req.on("end", () => {
-                req.body = JSON.parse(decodeURIComponent(postData));
+                req.body = JSON.parse(postData);
                 fn(req, res);
-                publishBlog();
+                /*  try {
+                    generate();
+                } catch (error) {
+                    console.log(error)
+                } */
             });
         }
     };
 }
 
-http.createServer((handleRouter)).listen(80, () => {
+http.createServer(handleRouter).listen(80, () => {
     console.log("Server listening on: http://localhost:%s", 80);
 });
 

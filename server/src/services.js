@@ -259,9 +259,3 @@ function deleteTag(tagId) {
 
 exports.deleteTag = deleteTag;
 
-function publishBlog() {
-    let postList = fse.readJSONSync(PostPath) || [];
-    let postTagList = fse.readJSONSync(PostTagPath) || [];
-    let tagList = fse.readJSONSync(TagPath) || [];
-}
-exports.publishBlog = publishBlog;
