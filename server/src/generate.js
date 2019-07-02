@@ -11,13 +11,19 @@ marked.setOptions({
     tables: true
 });
 
-const STORE = {
-    post: fse.readJSONSync(path.resolve(__dirname, "../database/post.json")),
-    tag: fse.readJSONSync(path.resolve(__dirname, "../database/tag.json")),
-    post_tag: fse.readJSONSync(
-        path.resolve(__dirname, "../database/post_tag.json")
-    )
-};
+let STORE = {};
+
+function initStore() {
+    STORE = {
+        post: fse.readJSONSync(
+            path.resolve(__dirname, "../database/post.json")
+        ),
+        tag: fse.readJSONSync(path.resolve(__dirname, "../database/tag.json")),
+        post_tag: fse.readJSONSync(
+            path.resolve(__dirname, "../database/post_tag.json")
+        )
+    };
+}
 
 const renderer = VueServerRenderer.createRenderer({
     template: fse.readFileSync("./template/index.template.html", "utf8")
@@ -177,16 +183,18 @@ function generateSitemap() {
 
 function copy2GithubPages() {
     let targetPath = path.resolve(__dirname, "../../../justyeh.github.io/");
-    fse.emptyDirSync(path.resolve(__dirname,targetPath,'./page'));
-    fse.emptyDirSync(path.resolve(__dirname,targetPath,'./post'));
-    fse.emptyDirSync(path.resolve(__dirname,targetPath,'./tag'));
+    fse.emptyDirSync(path.resolve(__dirname, targetPath, "./page"));
+    fse.emptyDirSync(path.resolve(__dirname, targetPath, "./post"));
+    fse.emptyDirSync(path.resolve(__dirname, targetPath, "./tag"));
     fse.copySync("./dist/", targetPath);
 }
 
 async function generate() {
+    initStore();
     await generateHtml();
     await generateSitemap();
     copy2GithubPages();
+    console.log(123);
 }
 
 exports.generate = generate;

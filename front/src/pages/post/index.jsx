@@ -50,7 +50,7 @@ export default class Post extends Component {
                 align: "left",
                 render: (text, record) => (
                     <a
-                        href={`http://www.justyeh.top/post/${record.id}`}
+                        href={`https://justyeh.github.io/post/${record.id}`}
                         rel="noopener noreferrer"
                         target="_blank"
                     >
@@ -119,14 +119,10 @@ export default class Post extends Component {
     };
 
     addPost = () => {
-        let { keyword, status } = this.state;
-        this.props.history.replace(`/post?keyword=${keyword}&status=${status}`);
         this.props.history.push("/post-form");
     };
 
     editPost = id => {
-        let { keyword, status } = this.state;
-        this.props.history.replace(`/post?keyword=${keyword}&status=${status}`);
         this.props.history.push(`/post-form?id=${id}`);
     };
 

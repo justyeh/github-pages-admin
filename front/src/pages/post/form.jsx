@@ -113,7 +113,7 @@ class PostForm extends Component {
         }
 
         list.forEach(item => {
-            if (item.name !== value) {
+            if (this.state.tagList.filter(tag=>tag.name === item.name).length === 0) {
                 tagSource.push(item);
             }
         });

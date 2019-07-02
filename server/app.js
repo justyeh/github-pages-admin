@@ -50,11 +50,11 @@ function Router(req, res) {
             req.on("end", () => {
                 req.body = JSON.parse(postData);
                 fn(req, res);
-                /*  try {
+                try {
                     generate();
                 } catch (error) {
-                    console.log(error)
-                } */
+                    console.log(error);
+                }
             });
         }
     };

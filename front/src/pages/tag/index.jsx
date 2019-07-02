@@ -44,7 +44,7 @@ export default class Tag extends Component {
                                 postList.map(item => (
                                     <div key={item.id}>
                                         <a
-                                            href={`http://www.justyeh.top/post/${
+                                            href={`https://justyeh.github.io/post/${
                                                 item.id
                                             }`}
                                             rel="noopener noreferrer"

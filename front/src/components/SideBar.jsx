@@ -6,7 +6,6 @@ export default class Sidebar extends Component {
     getClass = data => {
         let className = "";
         let activeRoute = routes.find(item => {
-            console.log(item.path, window.location.pathname);
             return window.location.pathname === item.path;
         });
         if (activeRoute) {
