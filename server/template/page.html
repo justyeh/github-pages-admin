@@ -8,7 +8,7 @@
                 <div class="info">
                     <i class="fa fa-clock-o"></i>
                     <p>{{post.updated_at}}</p>
-                    <i class="fa fa-tag" v-if="post.tagList>0"></i>
+                    <i class="fa fa-tag" v-if="post.tagList.length>0"></i>
                     <div>
                         <a v-for="postTag in post.tagList" :key="postTag.id" :href="'/tag/'+postTag.id">{{postTag.name}}</a>
                     </div>

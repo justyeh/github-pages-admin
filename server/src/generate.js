@@ -83,10 +83,11 @@ const App_Tag = new Vue({
 function getPostDetail(postId) {
     let tagIds = STORE.post_tag
         .filter(item => item.post_id === postId)
-        .map(item => item.id);
+        .map(item => item.tag_id);
     let tagList = STORE.tag.filter(item => {
         return tagIds.indexOf(item.id) > -1;
     });
+
     let content = marked(
         fse.readFileSync(`./database/markdown/${postId}.md`, "utf-8"),
         { renderer: getMarkedRender(postId) }
