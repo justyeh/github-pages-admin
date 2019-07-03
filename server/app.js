@@ -1,6 +1,9 @@
-const http = require("http");
 const path = require("path");
 const fse = require("fs-extra");
+const express = require("express");
+const app = express();
+const bodyParser = require('body-parser')  
+
 const {
     getPostList,
     getPostById,
@@ -12,119 +15,73 @@ const {
 } = require("./src/services.js");
 const { generate } = require("./src/generate");
 
-function Router(req, res) {
-    this.request = function(url, fn) {
-        if (!url) {
-            return new Error("url is required");
-        }
+app.listen(80, () => console.log("Example app listening on port 3000!"));
 
-        if (url !== req.url.split("?")[0]) {
-            return;
-        }
+//处理静态文件
+app.use(
+    "/",
+    express.static(path.resolve(__dirname, "../front/build"))
+);
 
-        if (req.method !== "GET" && req.method !== "POST") {
-            res.end("not supported http method");
-            return;
-        }
 
-        if (req.method === "GET") {
-            let urlSplit = req.url.split("?");
-            urlSplit[1] &&
-                urlSplit[1].split("&").forEach(item => {
-                    let paramsSplit = item.split("=");
-                    if (paramsSplit.length === 2) {
-                        req.params[paramsSplit[0]] = decodeURIComponent(
-                            paramsSplit[1]
-                        );
-                    }
-                });
-            fn(req, res);
-        }
+//处理post参数
+app.use(bodyParser.urlencoded({ extended: false }))    
+app.use(bodyParser.json()) 
 
-        if (req.method.toUpperCase() === "POST") {
-            let postData = "";
-            req.on("data", chunk => {
-                postData += chunk;
-            });
+app.get("/", (req, res) => res.redirect("/post"));
 
-            req.on("end", () => {
-                req.body = JSON.parse(postData);
-                fn(req, res);
-                try {
-                    generate();
-                } catch (error) {
-                    console.log(error);
-                }
-            });
-        }
-    };
-}
+const handleHtml = (req, res) => {
+    res.type("html");
+    res.send(
+        fse.readFileSync(
+            path.resolve(__dirname, "../front/build/index.html"),
+            "utf8"
+        )
+    );
+};
+app.get("/post", handleHtml);
+app.get("/post-form", handleHtml);
+app.get("/tag", handleHtml);
 
-http.createServer(handleRouter).listen(80, () => {
-    console.log("Server listening on: http://localhost:%s", 80);
+app.get("/api/post/list", (req, res) => {
+    res.json(getPostList(req.query.status, req.query.keyword));
 });
 
-function handleRouter(req, res) {
-    req.params = {};
-    req.body = {};
-    req.method = req.method.toUpperCase();
-    res.json = jsonData => {
-        res.writeHead(200, {
-            "Content-Type": "application/json; charset=utf-8"
-        });
-        res.end(JSON.stringify(jsonData));
-    };
+app.get("/api/post/detail", (req, res) => {
+    res.json(getPostById(Number(req.query.id)));
+});
 
-    const router = new Router(req, res);
-    router.request("/", (req, res) => {
-        res.writeHead(200, {
-            "Content-Type": "text/html; charset=utf-8"
-        });
-        let html = fse.readFileSync(
-            path.resolve(__dirname, "../front/dist/index.html")
-        );
-        res.end(html);
-    });
+app.post("/api/post/save", (req, res) => {
+    console.log(req.body)
+    res.json(savePost(req.body.post));
+});
 
-    router.request("/api/post/list", (req, res) => {
-        res.json(getPostList(req.params.status, req.params.keyword));
-    });
+app.post("/api/post/delete", (req, res) => {
+    res.json(deletePost(Number(req.body.id)));
+});
 
-    router.request("/api/post/detail", (req, res) => {
-        res.json(getPostById(Number(req.params.id)));
-    });
+app.get("/api/tag/list", (req, res) => {
+    res.json(getTagList(req.query.keyword));
+});
 
-    router.request("/api/post/save", (req, res) => {
-        res.json(savePost(req.body.post));
-    });
+app.post("/api/tag/update", (req, res) => {
+    res.json(
+        updateTag({
+            id: req.body.id,
+            name: req.body.name
+        })
+    );
+});
 
-    router.request("/api/post/delete", (req, res) => {
-        res.json(deletePost(Number(req.body.id)));
-    });
+app.post("/api/tag/delete", (req, res) => {
+    res.json(deleteTag(Number(req.body.id)));
+});
 
-    router.request("/api/tag/list", (req, res) => {
-        res.json(getTagList(req.params.keyword));
-    });
-
-    router.request("/api/tag/update", (req, res) => {
-        res.json(
-            updateTag({
-                id: req.body.id,
-                name: req.body.name
-            })
-        );
-    });
-
-    router.request("/api/tag/delete", (req, res) => {
-        res.json(deleteTag(Number(req.body.id)));
-    });
-
-    router.request("/api/generate", async (req, res) => {
-        try {
-            await generate();
-            res.json({ code: 200, data: "", message: "ok" });
-        } catch (error) {
-            res.json({ code: 201, data: "", message: error });
-        }
-    });
-}
+app.get("/api/generate", async (req, res) => {
+    try {
+        await generate();
+        res.json({ code: 200, data: "", message: "ok" });
+    } catch (error) {
+        res.json({ code: 201, data: "", message: error });
+    }
+});
