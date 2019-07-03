@@ -24,7 +24,8 @@ function getMarkedRender(postId) {
     };
     renderer.link = function(href, title, text) {
         if (href.startsWith("http")) {
-            return `<a href="${href}" title="${title || ""}" target="_blank">${text}</a>`;
+            return `<a href="${href}" title="${title ||
+                ""}" target="_blank">${text}</a>`;
         } else {
             return `<a href="${BLOG_URL}/static/blog/${postId}/${href}" title="${title ||
                 ""}" target="_blank">${text}</a>`;
@@ -164,7 +165,10 @@ async function generateHtml() {
     STORE.tag.forEach(async tagItem => {
         let postIds = STORE.post_tag
             .filter(item => item.tag_id === tagItem.id)
-            .map(item => item.post_id);
+            .map(item => item.post_id)
+            .sort((prevItem, nextItem) => {
+                return nextItem - prevItem;
+            });
 
         App_Tag.id = tagItem.id;
         App_Tag.name = tagItem.name;
