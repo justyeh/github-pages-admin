@@ -23,7 +23,6 @@ app.use(
     express.static(path.resolve(__dirname, "../front/build"))
 );
 
-
 //处理post参数
 app.use(bodyParser.urlencoded({ extended: false }))    
 app.use(bodyParser.json()) 
