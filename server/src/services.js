@@ -191,7 +191,6 @@ function deletePost(postId) {
 
         return { code: 200, data: "", message: "ok" };
     } catch (error) {
-        console.log(error);
         return { code: 201, data: "", message: error };
     }
 }

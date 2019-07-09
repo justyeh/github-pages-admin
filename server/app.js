@@ -15,7 +15,7 @@ const {
 } = require("./src/services.js");
 const { generate } = require("./src/generate");
 
-app.listen(80, () => console.log("Example app listening on port 3000!"));
+app.listen(80, () => console.log("Example app listening on port 80!"));
 
 //处理静态文件
 app.use(
