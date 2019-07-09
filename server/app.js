@@ -51,7 +51,6 @@ app.get("/api/post/detail", (req, res) => {
 });
 
 app.post("/api/post/save", (req, res) => {
-    console.log(req.body)
     res.json(savePost(req.body.post));
 });
 
