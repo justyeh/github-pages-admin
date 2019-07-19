@@ -54,8 +54,9 @@ exports.formatTimestamp = timestamp => {
     let d = new Date(timestamp);
 
     let year = d.getFullYear();
-    let month = d.getMonth() < 8 ? "0" + (d.getMonth()+1) : (d.getMonth()+1);
-    let day = d.getDate() < 9 ? "0" + d.getDate() : d.getDate();
+    let month = d.getMonth() + 1;
+    month = month < 10 ? "0" + month : month;
+    let day = d.getDate() < 10 ? "0" + d.getDate() : d.getDate();
     return `${year}-${month}-${day}`;
 };
 
