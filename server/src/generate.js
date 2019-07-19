@@ -103,7 +103,7 @@ function getPostDetail(postId) {
         summary: content.replace(/<[^>]+>/g, "").slice(0, 200),
         content,
         tagList,
-        updated_at: helper.timeago(post.updated_at)
+        updated_at: helper.formatTimestamp(post.updated_at)
     };
 }
 

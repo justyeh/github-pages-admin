@@ -50,7 +50,16 @@ exports.timeago = timestamp => {
     return "刚刚";
 };
 
-var createPageHtml = (pageNo, pageCount, pageSize, linkTo='/page/') => {
+exports.formatTimestamp = timestamp => {
+    let d = new Date(timestamp);
+
+    let year = d.getFullYear();
+    let month = d.getMonth() < 8 ? "0" + (d.getMonth()+1) : (d.getMonth()+1);
+    let day = d.getDate() < 9 ? "0" + d.getDate() : d.getDate();
+    return `${year}-${month}-${day}`;
+};
+
+var createPageHtml = (pageNo, pageCount, pageSize, linkTo = "/page/") => {
     var opts = {
         items_per_page: 10,
         num_display_entries: 10,
